@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="resumen_cliente"
+              pageWidth="595" pageHeight="842"
+              columnWidth="535" leftMargin="30" rightMargin="30"
+              topMargin="30" bottomMargin="20">
+
+    <parameter name="clienteNombre" class="java.lang.String"/>
+    <parameter name="clienteDocumento" class="java.lang.String"/>
+    <parameter name="saldoTotal" class="java.math.BigDecimal"/>
+    <parameter name="fechaGeneracion" class="java.lang.String"/>
+
+    <field name="numeroCuenta" class="java.lang.String"/>
+    <field name="tipo" class="java.lang.String"/>
+    <field name="saldo" class="java.math.BigDecimal"/>
+
+    <!-- TÍTULO -->
+    <title>
+        <band height="80" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="535" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="20" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Resumen Financiero]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="0" y="38" width="535" height="18"/>
+                <textElement textAlignment="Center">
+                    <font size="11"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Cliente: " + $P{clienteNombre} + "   |   Documento: " + $P{clienteDocumento}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="58" width="535" height="16"/>
+                <textElement textAlignment="Center">
+                    <font size="9" isItalic="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generado el: " + $P{fechaGeneracion}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <!-- ENCABEZADO DE COLUMNAS -->
+    <columnHeader>
+        <band height="28" splitType="Stretch">
+            <rectangle>
+                <reportElement x="0" y="0" width="535" height="28" backcolor="#2C3E50" mode="Opaque"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+            <staticText>
+                <reportElement x="5" y="5" width="220" height="18" forecolor="#FFFFFF"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Número de Cuenta]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="225" y="5" width="130" height="18" forecolor="#FFFFFF"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Tipo]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="355" y="5" width="175" height="18" forecolor="#FFFFFF"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Saldo (USD)]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- DETALLE POR CUENTA -->
+    <detail>
+        <band height="24" splitType="Stretch">
+            <textField>
+                <reportElement x="5" y="4" width="220" height="16"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{numeroCuenta}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="225" y="4" width="130" height="16"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="355" y="4" width="175" height="16"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="23" width="535" height="1" forecolor="#DDDDDD"/>
+            </line>
+        </band>
+    </detail>
+
+    <!-- TOTAL -->
+    <summary>
+        <band height="40" splitType="Stretch">
+            <rectangle>
+                <reportElement x="0" y="8" width="535" height="28" backcolor="#ECF0F1" mode="Opaque"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+            <staticText>
+                <reportElement x="5" y="12" width="350" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Saldo Total Consolidado:]]></text>
+            </staticText>
+            <textField pattern="#,##0.00">
+                <reportElement x="355" y="12" width="175" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{saldoTotal}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+
+</jasperReport>
